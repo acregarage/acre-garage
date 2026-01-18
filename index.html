@@ -1,209 +1,559 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acre Garage | İkinci El Araç Alım-Satım</title>
-  <meta name="description" content="Hızlı teklif, şeffaf süreç, güvenli alım-satım. Konsinye teklif ve araç teklif formu bağlantıları." />
-  <link rel="stylesheet" href="./styles.css" />
-</head>
-<body>
-  <!-- Background -->
-  <div class="bg" aria-hidden="true">
-    <div class="bg__glow bg__glow--red"></div>
-    <div class="bg__glow bg__glow--dark"></div>
-    <div class="bg__lines"></div>
-  </div>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acre Garage | Kurumsal Tanıtım</title>
+  <meta name="description" content="Acre Garage — Binek araç ve SUV odaklı 2. el alım-satım. Denizli Merkezefendi." />
+  <meta name="theme-color" content="#0a0b0e" />
 
-  <header class="header">
-    <div class="container header__inner">
-      <a class="brand" href="#">
-       <img src="logo.png" alt="Acre Garage Logo" class="logo">
+  <style>
+    /* =========================
+       1) Design tokens
+       ========================= */
+    :root{
+      --bg0:#050608;
+      --bg1:#0a0b0e;
+      --card:#0f1116;
+      --card2:#0b0d11;
+      --text:#f3f5f7;
+      --muted:#b7bec9;
+      --line:rgba(255,255,255,.10);
+      --red:#d41414;
+      --red2:#ff2a2a;
+      --shadow: 0 18px 55px rgba(0,0,0,.48);
+      --radius:18px;
+
+      --container: 1120px;
+      --pad: 22px;
+      --gap: 14px;
+
+      --fs-1: clamp(28px, 3.2vw, 46px);
+      --fs-2: 16px;
+      --fs-3: 14px;
+      --lh: 1.65;
+    }
+
+    /* =========================
+       2) Base / background
+       ========================= */
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      background:
+        radial-gradient(1100px 620px at 15% -10%, rgba(255,42,42,.18), transparent 55%),
+        radial-gradient(900px 520px at 100% 0%, rgba(212,20,20,.12), transparent 60%),
+        radial-gradient(900px 520px at 70% 120%, rgba(255,42,42,.10), transparent 60%),
+        /* Carbon-ish weave */
+        repeating-linear-gradient(45deg, rgba(255,255,255,.028) 0 8px, rgba(0,0,0,.028) 8px 16px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,.020) 0 10px, rgba(0,0,0,.020) 10px 20px),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      min-height:100vh;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{
+      width:min(var(--container), 92vw);
+      margin:0 auto;
+      padding: 18px 0 68px;
+    }
+
+    /* Focus visibility */
+    :focus-visible{
+      outline: 2px solid rgba(255,42,42,.65);
+      outline-offset: 3px;
+      border-radius: 12px;
+    }
+
+    /* =========================
+       3) Header
+       ========================= */
+    header{
+      position: sticky;
+      top: 12px;
+      z-index: 10;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(10,11,14,.62);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 36px rgba(0,0,0,.34);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 230px;
+      padding-left: 6px;
+    }
+    .brand img{
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 24px rgba(255,0,0,.18));
+    }
+    .brand .title{
+      display:flex; flex-direction:column;
+      line-height: 1.12;
+    }
+    .brand .title strong{
+      font-size: 14px;
+      letter-spacing:.7px;
+    }
+    .brand .title span{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap: 10px;
+    }
+    nav a{
+      font-size: 13px;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    nav a:hover{
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255,255,255,.035);
+    }
+
+    @media (max-width: 900px){
+      header{ position: relative; top: 0; }
+      .brand{ min-width: unset; }
+    }
+
+    /* =========================
+       4) Layout helpers
+       ========================= */
+    .panel{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(16,18,24,.78), rgba(10,11,14,.72));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(700px 280px at 18% 0%, rgba(255,42,42,.20), transparent 65%),
+        radial-gradient(620px 240px at 90% 16%, rgba(212,20,20,.14), transparent 60%);
+      opacity: .95;
+      pointer-events:none;
+    }
+    .panel > .in{
+      position: relative;
+      padding: var(--pad);
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing:.35px;
+      text-transform: uppercase;
+    }
+    .dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--red2), var(--red));
+      box-shadow: 0 0 20px rgba(255,42,42,.55);
+    }
+
+    /* =========================
+       5) Hero + side tiles
+       ========================= */
+    .hero{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: var(--gap);
+      align-items: stretch;
+    }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+
+    h1{
+      margin: 10px 0 10px;
+      font-size: var(--fs-1);
+      letter-spacing:.35px;
+    }
+    .sub{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: var(--lh);
+      max-width: 62ch;
+    }
+
+    .cta{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+
+      padding: 12px 14px;
+      min-width: 190px;
+
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .btn:hover{ background: rgba(255,255,255,.06); }
+    .btn.primary{
+      border-color: rgba(255,42,42,.48);
+      background: linear-gradient(180deg, rgba(255,42,42,.18), rgba(212,20,20,.10));
+    }
+    .btn.primary:hover{
+      background: linear-gradient(180deg, rgba(255,42,42,.24), rgba(212,20,20,.14));
+    }
+    .note{
+      margin-top: 12px;
+      color: rgba(183,190,201,.88);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .tiles{
+      display:grid;
+      gap: var(--gap);
+    }
+    .tile{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(12,13,17,.78), rgba(9,10,13,.72));
+      padding: 18px;
+      box-shadow: 0 16px 46px rgba(0,0,0,.40);
+    }
+    .tile h3{
+      margin: 0 0 6px;
+      font-size: 14px;
+      letter-spacing:.2px;
+    }
+    .tile p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* =========================
+       6) Sections grid
+       ========================= */
+    .grid{
+      margin-top: var(--gap);
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gap);
+    }
+
+    .card{
+      grid-column: span 6;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(14,16,22,.78), rgba(9,10,13,.70));
+      box-shadow: 0 16px 52px rgba(0,0,0,.40);
+      overflow:hidden;
+    }
+    .card .in{
+      padding: 20px;
+    }
+    .card h2{
+      margin: 0 0 10px;
+      font-size: 16px;
+      letter-spacing:.25px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .badge{
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--red2), var(--red));
+      box-shadow: 0 0 18px rgba(255,42,42,.45);
+      flex: 0 0 auto;
+    }
+    .card p, .card li{
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: var(--lh);
+    }
+    ul{ margin: 0; padding-left: 18px; }
+    li{ margin: 6px 0; }
+
+    .muted{
+      color: rgba(183,190,201,.75);
+      font-size: 12px;
+      line-height: 1.55;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 900px){
+      .card{ grid-column: span 12; }
+    }
+
+    /* =========================
+       7) Map
+       ========================= */
+    .map{
+      border-top: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.34));
+    }
+    iframe{
+      width: 100%;
+      height: 340px;
+      border: 0;
+      filter: saturate(1.05) contrast(1.08);
+    }
+
+    /* =========================
+       8) Socials: active/disabled
+       ========================= */
+    .social{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      width: 44px;
+      height: 44px;
+
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-weight: 800;
+      letter-spacing:.4px;
+      user-select:none;
+    }
+    .chip:hover{ background: rgba(255,255,255,.06); }
+    .chip.is-disabled{
+      opacity: .42;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* =========================
+       9) Footer
+       ========================= */
+    footer{
+      margin-top: var(--gap);
+      padding: 14px 6px 0;
+      color: rgba(183,190,201,.85);
+      font-size: 12px;
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <header>
+      <a class="brand" href="#top" aria-label="Acre Garage Ana Sayfa">
+        <img src="assets/logo.png" alt="Acre Garage Logo">
+        <div class="title">
+          <strong>ACRE GARAGE</strong>
+          <span>Kurumsal Tanıtım</span>
+        </div>
       </a>
 
-      <nav class="nav">
-        <a href="#guven" class="nav__link">Güven</a>
-        <a href="#hakkimizda" class="nav__link">Hakkımızda</a>
-        <a href="#iletisim" class="nav__link">İletişim</a>
+      <nav aria-label="Sayfa menüsü">
+        <a href="#hakkimizda">Hakkımızda</a>
+        <a href="#hizmetler">Hizmetler</a>
+        <a href="#iletisim">İletişim</a>
+        <a href="#konum">Konum</a>
       </nav>
-    </div>
-  </header>
+    </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container hero__grid">
-        <div class="hero__content">
-          <div class="pill">Hızlı • Şeffaf • Güvenli</div>
-          <h1>İkinci El Araç <span class="accent">Alım &amp; Satım</span></h1>
+    <!-- HERO (Goal: who/what + fastest contact) -->
+    <section class="hero" id="top">
+      <div class="panel">
+        <div class="in">
+          <div class="kicker"><span class="dot"></span> Denizli • Merkezefendi</div>
+
+          <h1>Acre Garage</h1>
+
           <p class="sub">
-            Hızlı teklif, şeffaf değerlendirme ve güvenli satış süreci.
-            Konsinye satış veya doğrudan alım için net bir yol sunuyoruz.
+            <strong>Binek araç ve SUV odaklı</strong> 2. el araç alım-satım.
+            Şeffaf iletişim ve güvenli süreç yaklaşımıyla, işlemleri sade ve anlaşılır şekilde yürütürüz.
           </p>
 
           <div class="cta">
-            <a class="btn btn--primary" href="https://wa.me/905370593001?text=Merhaba%20Acre%20Garage%2C%20konsinye%20teklif%20almak%20istiyorum."
-               target="_blank" rel="noopener">
-              Konsinye Teklif Al
+            <a class="btn primary" href="https://wa.me/905370593001" target="_blank" rel="noreferrer">
+              WhatsApp ile İletişim
             </a>
-            <a class="btn btn--ghost" href="https://wa.me/905370593001?text=Merhaba%20Acre%20Garage%2C%20aracim%20icin%20teklif%20almak%20istiyorum."
-               target="_blank" rel="noopener">
-              Aracım İçin Teklif Al
+            <a class="btn" href="tel:+905370593001">
+              Ara: +90 537 059 3001
             </a>
           </div>
 
-          <div class="hero__meta">
-            <div class="metaCard">
-              <div class="metaCard__title">Aynı gün dönüş</div>
-              <div class="metaCard__desc">Uygun araçlarda hızlı değerlendirme</div>
-            </div>
-            <div class="metaCard">
-              <div class="metaCard__title">Şeffaf süreç</div>
-              <div class="metaCard__desc">Net kriterler, açık iletişim</div>
-            </div>
-            <div class="metaCard">
-              <div class="metaCard__title">Güvenli işlem</div>
-              <div class="metaCard__desc">Evrak ve satış adımları kontrollü</div>
-            </div>
-          </div>
+          <p class="note">
+            Bu sayfa form veya üyelik toplamaz. İletişim yalnızca telefon/WhatsApp üzerinden yürütülür.
+          </p>
         </div>
+      </div>
 
-        <div class="hero__visual" aria-hidden="true">
-          <div class="glassCard">
-            <div class="glassCard__top">
-              <div class="dot dot--red"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-            </div>
-            <div class="glassCard__body">
-              <div class="kpi">
-                <div class="kpi__label">Odak</div>
-                <div class="kpi__value">Premium İkinci El</div>
-              </div>
-              <div class="kpi">
-                <div class="kpi__label">Hız</div>
-                <div class="kpi__value">Dakikalar içinde plan</div>
-              </div>
-              <div class="kpi">
-                <div class="kpi__label">İletişim</div>
-                <div class="kpi__value">WhatsApp / Telefon</div>
-              </div>
-              <div class="divider"></div>
-              <div class="miniNote">Not: Araç listesi yakında. Şimdilik teklif ve iletişim odaklı.</div>
-            </div>
-          </div>
+      <div class="tiles" aria-label="Öne çıkanlar">
+        <div class="tile">
+          <h3>Net ve Kurumsal İletişim</h3>
+          <p>İhtiyacınızı hızlıca anlar; kısa, açık ve ölçülü bir süreç yönetiriz.</p>
+        </div>
+        <div class="tile">
+          <h3>Şeffaf Yaklaşım</h3>
+          <p>Araç bilgisi ve değerlendirme adımlarında mümkün olan en net bilgilendirmeyi hedefleriz.</p>
+        </div>
+        <div class="tile">
+          <h3>Güvenli Süreç</h3>
+          <p>Evrak ve devir adımlarında düzenli takip ve doğru yönlendirme.</p>
         </div>
       </div>
     </section>
 
-    <!-- TRUST -->
-    <section id="guven" class="section">
-      <div class="container">
-        <h2>Güven Veren 3 Adım</h2>
-        <p class="sectionSub">Süreci sade tutuyoruz: hız, açıklık ve güven.</p>
-
-        <div class="cards">
-          <article class="card">
-            <div class="card__icon">⚡</div>
-            <h3>Hızlı teklif</h3>
-            <p>Aracın bilgilerini alır almaz uygunluk durumuna göre hızlı dönüş.</p>
-          </article>
-
-          <article class="card">
-            <div class="card__icon">🔎</div>
-            <h3>Şeffaf değerlendirme</h3>
-            <p>Piyasa analizi + ekspertiz sonuçlarıyla net bir çerçeve.</p>
-          </article>
-
-          <article class="card">
-            <div class="card__icon">🛡️</div>
-            <h3>Güvenli alım-satım</h3>
-            <p>Evrak, ödeme ve devir adımlarını kontrollü şekilde yönetiriz.</p>
-          </article>
+    <!-- CONTENT (Goal: credibility + scope + contact) -->
+    <section class="grid" aria-label="Kurumsal içerik">
+      <article class="card" id="hakkimizda">
+        <div class="in">
+          <h2><span class="badge"></span> Hakkımızda</h2>
+          <p>
+            Acre Garage, binek araç ve SUV segmentinde 2. el alım–satım hizmeti sunar.
+            Önceliğimiz; doğru bilgilendirme, net iletişim ve güvenli işlem adımlarıyla süreci kolaylaştırmaktır.
+          </p>
+          <p class="muted">
+            Bu sayfa “kurumsal kimlik/iletişim” amaçlıdır. Araç ilanları bu sayfada listelenmeyebilir.
+          </p>
         </div>
-      </div>
-    </section>
+      </article>
 
-    <!-- ABOUT -->
-    <section id="hakkimizda" class="section">
-      <div class="container about">
-        <div>
-          <h2>Hakkımızda</h2>
-          <p class="sectionSub">
-            Acre Garage, ikinci el araç alım-satım ve konsinye satış süreçlerinde
-            hızlı, şeffaf ve güvenli hizmet sunmayı hedefler.
+      <article class="card" id="hizmetler">
+        <div class="in">
+          <h2><span class="badge"></span> Hizmetler</h2>
+          <ul>
+            <li>2. el araç alım</li>
+            <li>2. el araç satış</li>
+            <li>Görüşme ve bilgilendirme ile süreç yönlendirmesi</li>
+          </ul>
+          <p class="muted">
+            İleride istersen burayı “takas / konsinye / ekspertiz” gibi başlıklarla genişletebiliriz.
+          </p>
+        </div>
+      </article>
+
+      <article class="card" id="iletisim">
+        <div class="in">
+          <h2><span class="badge"></span> İletişim</h2>
+          <p><strong>Yetkili:</strong> Onur Koç</p>
+          <p>
+            <strong>Telefon:</strong> <a href="tel:+905370593001">+90 537 059 3001</a><br />
+            <strong>WhatsApp:</strong> <a href="https://wa.me/905370593001" target="_blank" rel="noreferrer">Mesaj gönder</a>
           </p>
 
-          <ul class="list">
-            <li>✅ Piyasa analizi ve doğru fiyatlandırma</li>
-            <li>✅ Profesyonel ilan hazırlığı ve satış yönetimi</li>
-            <li>✅ Alıcı görüşmeleri ve evrak süreçlerinin takibi</li>
-          </ul>
-
-          <div class="inlineCta">
-            <a class="btn btn--primary btn--sm" href="#iletisim">İletişime Geç</a>
-            <a class="btn btn--ghost btn--sm" href="tel:+905370593001">Hemen Ara</a>
+          <div class="social" aria-label="Sosyal medya">
+            <!-- Hesap açınca sadece data-href değerini doldur -->
+            <a class="chip" data-href="" title="Instagram">IG</a>
+            <a class="chip" data-href="" title="Facebook">FB</a>
+            <a class="chip" data-href="" title="X">X</a>
+            <a class="chip" data-href="" title="YouTube">YT</a>
+            <a class="chip" data-href="" title="TikTok">TT</a>
+            <a class="chip" data-href="" title="LinkedIn">IN</a>
           </div>
+
+          <p class="muted">
+            Sosyal hesap açtıkça sadece ilgili ikonun <strong>data-href</strong> alanına link eklemen yeter.
+          </p>
         </div>
+      </article>
 
-        <div class="about__box">
-          <div class="about__badge">Acre Garage</div>
-          <div class="about__text">
-            <div class="about__title">“Kazançö senin, işlem bizden.”</div>
-            <div class="about__desc">Sade süreç • Net iletişim • Güvenli teslim</div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <article class="card" id="konum">
+        <div class="in">
+          <h2><span class="badge"></span> Adres</h2>
+          <p>
+            ACRE GARAGE, Kumkısık, Menderes Blv. No:161 I53, 20000 Denizli Merkezefendi/Denizli
+          </p>
 
-    <!-- CONTACT -->
-    <section id="iletisim" class="section">
-      <div class="container">
-        <h2>İletişim</h2>
-        <p class="sectionSub">Bize en hızlı WhatsApp üzerinden ulaşabilirsin.</p>
-
-        <div class="contactGrid">
-          <div class="contactCard">
-            <div class="contactCard__label">Telefon</div>
-            <a class="contactCard__value" href="tel:+905370593001">+90 537 059 3001</a>
-            <div class="contactCard__hint">Onur Koç</div>
-          </div>
-
-          <div class="contactCard">
-            <div class="contactCard__label">WhatsApp</div>
-            <a class="contactCard__value" target="_blank" rel="noopener"
-               href="https://wa.me/905370593001?text=Merhaba%20Acre%20Garage%2C%20bilgi%20almak%20istiyorum.">
-              Hemen yaz
+          <div class="cta">
+            <a class="btn primary" href="https://share.google/N0SxW1oOi9dwx2tEZ" target="_blank" rel="noreferrer">
+              Google Haritalar’da Aç
             </a>
-            <div class="contactCard__hint">Mesaj at, dönüş yapalım</div>
-          </div>
-
-          <div class="contactCard">
-            <div class="contactCard__label">Adres</div>
-            <div class="contactCard__value">[Adres buraya]</div>
-            <div class="contactCard__hint">Harita linki eklenebilir</div>
+            <a class="btn" href="https://www.google.com/maps?q=ACRE%20GARAGE%2C%20Kumk%C4%B1s%C4%B1k%2C%20Menderes%20Blv.%20No%3A161%20I53%2C%2020000%20Denizli%20Merkezefendi%2FDenizli" target="_blank" rel="noreferrer">
+              Konumu Görüntüle
+            </a>
           </div>
         </div>
-      </div>
+
+        <div class="map" aria-label="Harita">
+          <iframe
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=ACRE%20GARAGE%2C%20Kumk%C4%B1s%C4%B1k%2C%20Menderes%20Blv.%20No%3A161%20I53%2C%2020000%20Denizli%20Merkezefendi%2FDenizli&output=embed">
+          </iframe>
+        </div>
+      </article>
     </section>
-  </main>
 
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__left">
-        <div class="brand brand--footer">
-          <span class="brand__mark"></span>
-          <span class="brand__name">ACRE GARAGE</span>
-        </div>
-        <div class="footer__slogan">Hızlı teklif • Şeffaf süreç • Güvenli satış</div>
-      </div>
+    <footer>
+      <div>© <span id="year"></span> Acre Garage</div>
+      <div>Siyah • Beyaz • Kırmızı — Kurumsal Tanıtım Sayfası</div>
+    </footer>
 
-      <div class="footer__right">
-        <a class="footer__link" href="#guven">Güven</a>
-        <a class="footer__link" href="#hakkimizda">Hakkımızda</a>
-        <a class="footer__link" href="#iletisim">İletişim</a>
-      </div>
-    </div>
-  </footer>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Social links auto-enable/disable:
+    // If data-href is empty => disabled.
+    // If data-href is filled => opens in new tab.
+    document.querySelectorAll(".chip[data-href]").forEach((el) => {
+      const url = (el.getAttribute("data-href") || "").trim();
+      if (!url) {
+        el.classList.add("is-disabled");
+        el.setAttribute("aria-disabled", "true");
+        el.title = (el.title ? el.title + " (Yakında)" : "Yakında");
+        return;
+      }
+      el.setAttribute("href", url);
+      el.setAttribute("target", "_blank");
+      el.setAttribute("rel", "noreferrer");
+    });
+  </script>
 </body>
 </html>
