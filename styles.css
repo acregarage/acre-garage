@@ -268,4 +268,8 @@ h2{margin:0 0 8px; font-size:26px; letter-spacing:-.01em}
 .footer__link{color:var(--muted); font-size:13px}
 .footer__link:hover{color:var(--text)}
 .brand--footer .brand__name{font-size:11px}
+.logo{
+  height:42px;
+  width:auto;
+}
 
