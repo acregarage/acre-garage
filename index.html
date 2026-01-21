@@ -1,560 +1,509 @@
-<!-- force rebuild -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Acre Garage | Kurumsal Tanıtım</title>
-  <meta name="description" content="Acre Garage — Binek araç ve SUV odaklı 2. el alım-satım. Denizli Merkezefendi." />
-  <meta name="theme-color" content="#0a0b0e" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACRE Garage | Güvenilir Araç Alım Satım</title>
+  <meta name="description" content="ACRE Garage - Nakit araç alım, konsinye satış, ekspertiz. Hızlı, güvenli, profesyonel hizmet." />
 
   <style>
-    /* =========================
-       1) Design tokens
-       ========================= */
     :root{
-      --bg0:#050608;
-      --bg1:#0a0b0e;
-      --card:#0f1116;
-      --card2:#0b0d11;
-      --text:#f3f5f7;
-      --muted:#b7bec9;
-      --line:rgba(255,255,255,.10);
-      --red:#d41414;
-      --red2:#ff2a2a;
-      --shadow: 0 18px 55px rgba(0,0,0,.48);
-      --radius:18px;
-
-      --container: 1120px;
-      --pad: 22px;
-      --gap: 14px;
-
-      --fs-1: clamp(28px, 3.2vw, 46px);
-      --fs-2: 16px;
-      --fs-3: 14px;
-      --lh: 1.65;
+      --bg:#0a0a0a;
+      --bg2:#101010;
+      --card:#141414;
+      --text:#ffffff;
+      --muted:#b9b9b9;
+      --red:#ff3333;
+      --red2:#cc0000;
+      --border:rgba(255,51,51,.25);
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --radius:16px;
+      --max:1100px;
     }
 
-    /* =========================
-       2) Base / background
-       ========================= */
-    *{ box-sizing:border-box; }
+    *{ margin:0; padding:0; box-sizing:border-box; }
     html{ scroll-behavior:smooth; }
     body{
-      margin:0;
-      color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-      background:
-        radial-gradient(1100px 620px at 15% -10%, rgba(255,42,42,.18), transparent 55%),
-        radial-gradient(900px 520px at 100% 0%, rgba(212,20,20,.12), transparent 60%),
-        radial-gradient(900px 520px at 70% 120%, rgba(255,42,42,.10), transparent 60%),
-        /* Carbon-ish weave */
-        repeating-linear-gradient(45deg, rgba(255,255,255,.028) 0 8px, rgba(0,0,0,.028) 8px 16px),
-        repeating-linear-gradient(-45deg, rgba(255,255,255,.020) 0 10px, rgba(0,0,0,.020) 10px 20px),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      min-height:100vh;
-    }
-    a{ color:inherit; text-decoration:none; }
-    .wrap{
-      width:min(var(--container), 92vw);
-      margin:0 auto;
-      padding: 18px 0 68px;
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height:1.6;
     }
 
-    /* Focus visibility */
-    :focus-visible{
-      outline: 2px solid rgba(255,42,42,.65);
-      outline-offset: 3px;
-      border-radius: 12px;
+    /* Global */
+    .container{ max-width:var(--max); margin:0 auto; padding:0 20px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:14px 22px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:800;
+      letter-spacing:.2px;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn-primary{
+      background: linear-gradient(90deg, var(--red) 0%, var(--red2) 100%);
+      box-shadow: 0 10px 30px rgba(255,51,51,.25);
+      color:#fff;
+    }
+    .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 14px 40px rgba(255,51,51,.35); }
+    .btn-ghost{
+      background: rgba(255,51,51,.06);
+      border-color: var(--border);
+      color:#fff;
+    }
+    .btn-ghost:hover{ transform: translateY(-2px); border-color: rgba(255,51,51,.45); }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 14px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      background: rgba(255,255,255,.02);
+      color: var(--muted);
+      font-size:14px;
+    }
+    .section{
+      padding: 80px 0;
+      background: transparent;
+    }
+    .section-title{
+      font-size: 34px;
+      margin-bottom: 18px;
+      color: var(--red);
+      text-align:center;
+    }
+    .section-subtitle{
+      text-align:center;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto 46px;
     }
 
-    /* =========================
-       3) Header
-       ========================= */
-    header{
+    /* Topbar */
+    .topbar{
       position: sticky;
-      top: 12px;
-      z-index: 10;
-
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,10,.60);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .topbar-inner{
+      height:68px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 12px;
-
-      padding: 10px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(10,11,14,.62);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 12px 36px rgba(0,0,0,.34);
     }
-
     .brand{
       display:flex;
       align-items:center;
-      gap: 12px;
-      min-width: 230px;
-      padding-left: 6px;
+      gap:12px;
+      text-decoration:none;
+      color:#fff;
+      font-weight:900;
+      letter-spacing:.5px;
     }
     .brand img{
-      width: 46px;
-      height: 46px;
-      object-fit: contain;
-      filter: drop-shadow(0 10px 24px rgba(255,0,0,.18));
+      width:42px;
+      height:42px;
+      border-radius:10px;
+      object-fit:contain;
+      filter: drop-shadow(0 0 18px rgba(255,51,51,.30));
     }
-    .brand .title{
-      display:flex; flex-direction:column;
-      line-height: 1.12;
-    }
-    .brand .title strong{
-      font-size: 14px;
-      letter-spacing:.7px;
-    }
-    .brand .title span{
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    nav{
+    .nav{
       display:flex;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      gap: 10px;
-    }
-    nav a{
-      font-size: 13px;
-      color: var(--muted);
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-    nav a:hover{
-      color: var(--text);
-      border-color: var(--line);
-      background: rgba(255,255,255,.035);
-    }
-
-    @media (max-width: 900px){
-      header{ position: relative; top: 0; }
-      .brand{ min-width: unset; }
-    }
-
-    /* =========================
-       4) Layout helpers
-       ========================= */
-    .panel{
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(16,18,24,.78), rgba(10,11,14,.72));
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-    }
-    .panel::before{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background:
-        radial-gradient(700px 280px at 18% 0%, rgba(255,42,42,.20), transparent 65%),
-        radial-gradient(620px 240px at 90% 16%, rgba(212,20,20,.14), transparent 60%);
-      opacity: .95;
-      pointer-events:none;
-    }
-    .panel > .in{
-      position: relative;
-      padding: var(--pad);
-    }
-
-    .kicker{
-      display:inline-flex;
       align-items:center;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing:.35px;
-      text-transform: uppercase;
+      gap:16px;
     }
-    .dot{
-      width: 8px; height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, var(--red2), var(--red));
-      box-shadow: 0 0 20px rgba(255,42,42,.55);
+    .nav a{
+      color: rgba(255,255,255,.85);
+      text-decoration:none;
+      font-weight:700;
+      font-size:14px;
+      padding:10px 10px;
+      border-radius:10px;
+      transition: background .2s ease, color .2s ease;
+    }
+    .nav a:hover{
+      background: rgba(255,255,255,.04);
+      color:#fff;
     }
 
-    /* =========================
-       5) Hero + side tiles
-       ========================= */
+    /* Hero */
     .hero{
-      margin-top: 18px;
+      position:relative;
+      min-height: calc(100vh - 68px);
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      background:
+        radial-gradient(ellipse at center, rgba(255,51,51,0.12) 0%, transparent 68%),
+        repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 6px);
+    }
+    .hero-grid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
-      gap: var(--gap);
-      align-items: stretch;
+      gap: 36px;
+      align-items:center;
+      padding: 70px 0;
     }
-    @media (max-width: 900px){
-      .hero{ grid-template-columns: 1fr; }
+    .hero h1{
+      font-size: 48px;
+      line-height:1.12;
+      letter-spacing:-.5px;
+      margin: 14px 0 14px;
     }
-
-    h1{
-      margin: 10px 0 10px;
-      font-size: var(--fs-1);
-      letter-spacing:.35px;
-    }
-    .sub{
-      margin: 0 0 16px;
+    .hero p{
       color: var(--muted);
-      font-size: 15px;
-      line-height: var(--lh);
-      max-width: 62ch;
+      font-size: 18px;
+      max-width: 560px;
     }
-
-    .cta{
+    .hero-actions{
+      margin-top: 26px;
       display:flex;
       flex-wrap:wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-
-      padding: 12px 14px;
-      min-width: 190px;
-
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--text);
-    }
-    .btn:hover{ background: rgba(255,255,255,.06); }
-    .btn.primary{
-      border-color: rgba(255,42,42,.48);
-      background: linear-gradient(180deg, rgba(255,42,42,.18), rgba(212,20,20,.10));
-    }
-    .btn.primary:hover{
-      background: linear-gradient(180deg, rgba(255,42,42,.24), rgba(212,20,20,.14));
-    }
-    .note{
-      margin-top: 12px;
-      color: rgba(183,190,201,.88);
-      font-size: 12px;
-      line-height: 1.55;
+      gap:12px;
     }
 
-    .tiles{
-      display:grid;
-      gap: var(--gap);
-    }
-    .tile{
-      border: 1px solid var(--line);
+    .hero-card{
+      background: linear-gradient(135deg, rgba(255,51,51,.10), rgba(20,20,20,.88));
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(12,13,17,.78), rgba(9,10,13,.72));
-      padding: 18px;
-      box-shadow: 0 16px 46px rgba(0,0,0,.40);
+      box-shadow: var(--shadow);
+      padding: 22px;
     }
-    .tile h3{
-      margin: 0 0 6px;
-      font-size: 14px;
-      letter-spacing:.2px;
-    }
-    .tile p{
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    /* =========================
-       6) Sections grid
-       ========================= */
-    .grid{
-      margin-top: var(--gap);
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: var(--gap);
-    }
-
-    .card{
-      grid-column: span 6;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(14,16,22,.78), rgba(9,10,13,.70));
-      box-shadow: 0 16px 52px rgba(0,0,0,.40);
-      overflow:hidden;
-    }
-    .card .in{
-      padding: 20px;
-    }
-    .card h2{
-      margin: 0 0 10px;
-      font-size: 16px;
-      letter-spacing:.25px;
+    .hero-logo{
+      width:100%;
       display:flex;
       align-items:center;
+      justify-content:center;
+      padding: 18px 0 6px;
+    }
+    .hero-logo img{
+      width: 280px;
+      max-width: 100%;
+      height:auto;
+      object-fit:contain;
+      filter: drop-shadow(0 0 26px rgba(255,51,51,.35));
+    }
+    .hero-points{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
       gap: 10px;
     }
-    .badge{
-      width: 10px; height: 10px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, var(--red2), var(--red));
-      box-shadow: 0 0 18px rgba(255,42,42,.45);
+    .point{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .dot{
+      width:10px; height:10px;
+      border-radius:999px;
+      margin-top:7px;
+      background: var(--red);
+      box-shadow: 0 0 18px rgba(255,51,51,.45);
       flex: 0 0 auto;
     }
-    .card p, .card li{
-      color: var(--muted);
-      font-size: 13.5px;
-      line-height: var(--lh);
-    }
-    ul{ margin: 0; padding-left: 18px; }
-    li{ margin: 6px 0; }
+    .point b{ display:block; font-size:14px; margin-bottom:2px; }
+    .point span{ color: var(--muted); font-size:14px; }
 
-    .muted{
-      color: rgba(183,190,201,.75);
-      font-size: 12px;
-      line-height: 1.55;
-      margin-top: 10px;
+    /* Services */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
-
-    @media (max-width: 900px){
-      .card{ grid-column: span 12; }
+    .card{
+      background: rgba(20,20,20,.78);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
     }
-
-    /* =========================
-       7) Map
-       ========================= */
-    .map{
-      border-top: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.34));
+    .card:hover{
+      transform: translateY(-6px);
+      border-color: rgba(255,51,51,.35);
+      box-shadow: 0 16px 45px rgba(0,0,0,.55);
     }
-    iframe{
-      width: 100%;
-      height: 340px;
-      border: 0;
-      filter: saturate(1.05) contrast(1.08);
-    }
-
-    /* =========================
-       8) Socials: active/disabled
-       ========================= */
-    .social{
+    .icon{
+      width:48px; height:48px;
+      border-radius:14px;
       display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .chip{
-      display:inline-flex;
       align-items:center;
       justify-content:center;
-
-      width: 44px;
-      height: 44px;
-
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      font-weight: 800;
-      letter-spacing:.4px;
-      user-select:none;
+      background: rgba(255,51,51,.10);
+      border:1px solid rgba(255,51,51,.25);
+      color:#fff;
+      font-size:22px;
+      margin-bottom: 14px;
     }
-    .chip:hover{ background: rgba(255,255,255,.06); }
-    .chip.is-disabled{
-      opacity: .42;
-      cursor: not-allowed;
-      pointer-events: none;
+    .card h3{
+      color: var(--red);
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .card p{
+      color: var(--muted);
+      font-size: 15px;
     }
 
-    /* =========================
-       9) Footer
-       ========================= */
-    footer{
-      margin-top: var(--gap);
-      padding: 14px 6px 0;
-      color: rgba(183,190,201,.85);
-      font-size: 12px;
+    /* Contact */
+    .contact{
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      border-top: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .contact-box{
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+    }
+    .contact-row{
       display:flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 12px;
+      align-items:flex-start;
+      padding: 14px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.22);
+      margin-top: 12px;
+    }
+    .contact-row a{
+      color:#fff;
+      text-decoration:none;
+      border-bottom: 1px dashed rgba(255,255,255,.25);
+    }
+    .contact-row a:hover{
+      color: var(--red);
+      border-bottom-color: rgba(255,51,51,.45);
+    }
+    .map{
+      overflow:hidden;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,51,51,.25);
+      box-shadow: var(--shadow);
+      min-height: 380px;
+    }
+    .map iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+      min-height: 380px;
+    }
+
+    /* Footer */
+    footer{
+      padding: 36px 0;
+      color: rgba(255,255,255,.55);
+      text-align:center;
+      font-size:14px;
+    }
+
+    /* Mobile */
+    @media (max-width: 920px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero h1{ font-size: 38px; }
+      .grid{ grid-template-columns: 1fr; }
+      .contact-grid{ grid-template-columns: 1fr; }
+      .nav{ display:none; } /* sade mobil */
+    }
+    @media (max-width: 420px){
+      .hero h1{ font-size: 32px; }
+      .btn{ width:100%; }
+      .hero-actions{ flex-direction:column; }
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-
-    <header>
-      <a class="brand" href="#top" aria-label="Acre Garage Ana Sayfa">
-        <img src="assets/logo.png" alt="Acre Garage Logo">
-        <div class="title">
-          <strong>ACRE GARAGE</strong>
-          <span>Kurumsal Tanıtım</span>
-        </div>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top">
+        <!-- LOGO: logo dosyanı proje klasörüne logo.png olarak koy -->
+        <img src="logo.png" alt="ACRE Garage Logo" />
+        <span>ACRE Garage</span>
       </a>
 
-      <nav aria-label="Sayfa menüsü">
-        <a href="#hakkimizda">Hakkımızda</a>
-        <a href="#hizmetler">Hizmetler</a>
-        <a href="#iletisim">İletişim</a>
-        <a href="#konum">Konum</a>
+      <nav class="nav">
+        <a href="#services">Hizmetler</a>
+        <a href="#contact">İletişim</a>
       </nav>
-    </header>
 
-    <!-- HERO (Goal: who/what + fastest contact) -->
-    <section class="hero" id="top">
-      <div class="panel">
-        <div class="in">
-          <div class="kicker"><span class="dot"></span> Denizli • Merkezefendi</div>
+      <a class="btn btn-ghost" href="#contact">Teklif Al</a>
+    </div>
+  </header>
 
-          <h1>Acre Garage</h1>
-
-          <p class="sub">
-            <strong>Binek araç ve SUV odaklı</strong> 2. el araç alım-satım.
-            Şeffaf iletişim ve güvenli süreç yaklaşımıyla, işlemleri sade ve anlaşılır şekilde yürütürüz.
+  <!-- Hero -->
+  <main id="top" class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <span class="pill">🚗 İkinci El Araç Alım • Satım • Konsinye</span>
+          <h1>Araç Alım Satımında<br/>Güvenilir ve Profesyonel Çözüm</h1>
+          <p>
+            Marka model fark etmeksizin; ekspertiz sonrası <b>hızlı nakit alım</b> veya
+            <b>konsinye satış</b> seçenekleriyle süreci sizin için kolaylaştırıyoruz.
           </p>
 
-          <div class="cta">
-            <a class="btn primary" href="https://wa.me/905370593001" target="_blank" rel="noreferrer">
-              WhatsApp ile İletişim
-            </a>
-            <a class="btn" href="tel:+905370593001">
-              Ara: +90 537 059 3001
-            </a>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Hemen İletişime Geçin</a>
+            <a class="btn btn-ghost" href="tel:+905370593001">📞 0537 059 3001</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="ACRE Garage Özet">
+          <div class="hero-logo">
+            <img src="logo.png" alt="ACRE Garage" />
           </div>
 
-          <p class="note">
-            Bu sayfa form veya üyelik toplamaz. İletişim yalnızca telefon/WhatsApp üzerinden yürütülür.
-          </p>
+          <div class="hero-points">
+            <div class="point">
+              <span class="dot"></span>
+              <div>
+                <b>Hızlı Değerleme</b>
+                <span>Net bilgi, hızlı dönüş.</span>
+              </div>
+            </div>
+            <div class="point">
+              <span class="dot"></span>
+              <div>
+                <b>Şeffaf Süreç</b>
+                <span>Ekspertiz ve satış adımları açık ve anlaşılır.</span>
+              </div>
+            </div>
+            <div class="point">
+              <span class="dot"></span>
+              <div>
+                <b>Güvenli İşlem</b>
+                <span>Evrak ve süreç yönetimi desteği.</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Services -->
+  <section id="services" class="section">
+    <div class="container">
+      <h2 class="section-title">Hizmetlerimiz</h2>
+      <p class="section-subtitle">
+        ACRE Garage’da hedefimiz; hızlı, güvenli ve net bir deneyim sunmak.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="icon">💰</div>
+          <h3>Nakit Araç Alım</h3>
+          <p>Ekspertiz sonrası aracınızı hızlı şekilde nakit alıyoruz.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">🤝</div>
+          <h3>Konsinye Satış</h3>
+          <p>İlan, görüşme, pazarlık ve süreç takibini sizin adınıza yönetiyoruz.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">🔍</div>
+          <h3>Ekspertiz & Kontrol</h3>
+          <p>Güvenilir kontrol adımlarıyla alım-satım riskini azaltıyoruz.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="tiles" aria-label="Öne çıkanlar">
-        <div class="tile">
-          <h3>Net ve Kurumsal İletişim</h3>
-          <p>İhtiyacınızı hızlıca anlar; kısa, açık ve ölçülü bir süreç yönetiriz.</p>
-        </div>
-        <div class="tile">
-          <h3>Şeffaf Yaklaşım</h3>
-          <p>Araç bilgisi ve değerlendirme adımlarında mümkün olan en net bilgilendirmeyi hedefleriz.</p>
-        </div>
-        <div class="tile">
-          <h3>Güvenli Süreç</h3>
-          <p>Evrak ve devir adımlarında düzenli takip ve doğru yönlendirme.</p>
-        </div>
-      </div>
-    </section>
+  <!-- Contact -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <h2 class="section-title">İletişim</h2>
+      <p class="section-subtitle">
+        Hızlı teklif ve bilgi için arayın veya konumdan bize ulaşın.
+      </p>
 
-    <!-- CONTENT (Goal: credibility + scope + contact) -->
-    <section class="grid" aria-label="Kurumsal içerik">
-      <article class="card" id="hakkimizda">
-        <div class="in">
-          <h2><span class="badge"></span> Hakkımızda</h2>
-          <p>
-            Acre Garage, binek araç ve SUV segmentinde 2. el alım–satım hizmeti sunar.
-            Önceliğimiz; doğru bilgilendirme, net iletişim ve güvenli işlem adımlarıyla süreci kolaylaştırmaktır.
-          </p>
-          <p class="muted">
-            Bu sayfa “kurumsal kimlik/iletişim” amaçlıdır. Araç ilanları bu sayfada listelenmeyebilir.
-          </p>
-        </div>
-      </article>
+      <div class="contact-grid">
+        <div class="contact-box">
+          <h3 style="color:var(--red); font-size:18px;">Bilgiler</h3>
 
-      <article class="card" id="hizmetler">
-        <div class="in">
-          <h2><span class="badge"></span> Hizmetler</h2>
-          <ul>
-            <li>2. el araç alım</li>
-            <li>2. el araç satış</li>
-            <li>Görüşme ve bilgilendirme ile süreç yönlendirmesi</li>
-          </ul>
-          <p class="muted">
-            İleride istersen burayı “takas / konsinye / ekspertiz” gibi başlıklarla genişletebiliriz.
-          </p>
-        </div>
-      </article>
-
-      <article class="card" id="iletisim">
-        <div class="in">
-          <h2><span class="badge"></span> İletişim</h2>
-          <p><strong>Yetkili:</strong> Onur Koç</p>
-          <p>
-            <strong>Telefon:</strong> <a href="tel:+905370593001">+90 537 059 3001</a><br />
-            <strong>WhatsApp:</strong> <a href="https://wa.me/905370593001" target="_blank" rel="noreferrer">Mesaj gönder</a>
-          </p>
-
-          <div class="social" aria-label="Sosyal medya">
-            <!-- Hesap açınca sadece data-href değerini doldur -->
-            <a class="chip" data-href="" title="Instagram">IG</a>
-            <a class="chip" data-href="" title="Facebook">FB</a>
-            <a class="chip" data-href="" title="X">X</a>
-            <a class="chip" data-href="" title="YouTube">YT</a>
-            <a class="chip" data-href="" title="TikTok">TT</a>
-            <a class="chip" data-href="" title="LinkedIn">IN</a>
+          <div class="contact-row">
+            <div class="icon" style="width:42px;height:42px;border-radius:12px;font-size:18px;">📞</div>
+            <div>
+              <b>Telefon</b><br/>
+              <a href="tel:+905370593001">0537 059 3001</a>
+              <div style="color:var(--muted); font-size:13px; margin-top:4px;">Onur Koç</div>
+            </div>
           </div>
 
-          <p class="muted">
-            Sosyal hesap açtıkça sadece ilgili ikonun <strong>data-href</strong> alanına link eklemen yeter.
-          </p>
-        </div>
-      </article>
+          <div class="contact-row">
+            <div class="icon" style="width:42px;height:42px;border-radius:12px;font-size:18px;">📍</div>
+            <div>
+              <b>Adres</b><br/>
+              <span style="color:var(--muted);">
+                Denizli / Merkezefendi<br/>
+                (Adres satırını buraya net şekilde yazabilirsin)
+              </span>
+            </div>
+          </div>
 
-      <article class="card" id="konum">
-        <div class="in">
-          <h2><span class="badge"></span> Adres</h2>
-          <p>
-            ACRE GARAGE, Kumkısık, Menderes Blv. No:161 I53, 20000 Denizli Merkezefendi/Denizli
-          </p>
+          <div class="contact-row">
+            <div class="icon" style="width:42px;height:42px;border-radius:12px;font-size:18px;">⏰</div>
+            <div>
+              <b>Çalışma Saatleri</b><br/>
+              <span style="color:var(--muted);">Pazartesi - Cumartesi • 09:00 - 19:00</span>
+            </div>
+          </div>
 
-          <div class="cta">
-            <a class="btn primary" href="https://share.google/N0SxW1oOi9dwx2tEZ" target="_blank" rel="noreferrer">
-              Google Haritalar’da Aç
-            </a>
-            <a class="btn" href="https://www.google.com/maps?q=ACRE%20GARAGE%2C%20Kumk%C4%B1s%C4%B1k%2C%20Menderes%20Blv.%20No%3A161%20I53%2C%2020000%20Denizli%20Merkezefendi%2FDenizli" target="_blank" rel="noreferrer">
-              Konumu Görüntüle
-            </a>
+          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="tel:+905370593001">Hemen Ara</a>
+            <a class="btn btn-ghost" href="#services">Hizmetleri Gör</a>
           </div>
         </div>
 
         <div class="map" aria-label="Harita">
+          <!-- Google Maps embed: kendi konum linkinle güncelle -->
           <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3124.6934485819447!2d27.142825315417696!3d38.423733679646916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd862a762cacd%3A0x628cbf7c9a861b9a!2zxLB6bWly!5e0!3m2!1str!2str!4v1234567890123!5m2!1str!2str"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=ACRE%20GARAGE%2C%20Kumk%C4%B1s%C4%B1k%2C%20Menderes%20Blv.%20No%3A161%20I53%2C%2020000%20Denizli%20Merkezefendi%2FDenizli&output=embed">
+            allowfullscreen>
           </iframe>
         </div>
-      </article>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      <div>© <span id="year"></span> Acre Garage</div>
-      <div>Siyah • Beyaz • Kırmızı — Kurumsal Tanıtım Sayfası</div>
-    </footer>
-
-  </div>
-
-  <script>
-    // Year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Social links auto-enable/disable:
-    // If data-href is empty => disabled.
-    // If data-href is filled => opens in new tab.
-    document.querySelectorAll(".chip[data-href]").forEach((el) => {
-      const url = (el.getAttribute("data-href") || "").trim();
-      if (!url) {
-        el.classList.add("is-disabled");
-        el.setAttribute("aria-disabled", "true");
-        el.title = (el.title ? el.title + " (Yakında)" : "Yakında");
-        return;
-      }
-      el.setAttribute("href", url);
-      el.setAttribute("target", "_blank");
-      el.setAttribute("rel", "noreferrer");
-    });
-  </script>
+  <footer>
+    <div class="container">
+      <div style="display:flex; gap:10px; align-items:center; justify-content:center; margin-bottom:10px;">
+        <span style="color:rgba(255,255,255,.7); font-weight:900;">ACRE Garage</span>
+        <span style="color:rgba(255,255,255,.35);">•</span>
+        <span style="color:rgba(255,255,255,.55);">Hızlı • Güvenli • Profesyonel</span>
+      </div>
+      <div>&copy; 2026 ACRE Garage. Tüm hakları saklıdır.</div>
+    </div>
+  </footer>
 </body>
 </html>
